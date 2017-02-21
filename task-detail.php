@@ -1,5 +1,10 @@
 <?php
+function  PreFormat ($Daten) {
+    echo '<pre><code>';
+    var_dump($Daten);
+    echo '</code></pre>';
 
+}
 // var_dump($_GET);
 
 //wenn keine taskid mitgegeben wird, stelle ich die taskliste wieder dar
@@ -14,12 +19,16 @@ if (empty($_GET['taskid']) || !is_numeric($_GET['taskid'])) {
 $taskid = $_GET['taskid'];
 
 // hole einen Task loader
-require_once "ManualTaskLoader.php";
-$manualTaskLoader = new ManualTaskLoader();
+require_once "DBTaskLoader.php";
+$DBTaskLoader = new DBTaskLoader();
 
 
 // frage den task loader nach dem task mit der id aus der GET parameter
-$task = $manualTaskLoader->getTask($taskid);
+$task = $DBTaskLoader->getTask($taskid);
+
+/*PreFormat($task);
+
+*/
 
 //wenn kein task mit dieser taskid gefunden wurde...
 if ($task == null) {
@@ -45,16 +54,13 @@ function formatDate($date, $target_format = 'd.m.Y') {
 
 ?>
 
-<h1><?php echo $task->getTitle(); ?></h1>
+<h1><?php echo $task["title"]; ?></h1>
 <p>
-    ID: <?php echo $task->getId(); ?> <br/>
-    User ID: <?php echo $task->getUserId(); ?> <br/>
-    Status ID: <?php echo $task->getStatusId(); ?> <br/>
-    Beschreibung: <?php echo $task->getDescription(); ?> <br/>
-    Fälligkeitsdatum: <?php echo formatDate($task->getDuedate()); ?> <br/>
-    Erstellt am: <?php echo formatDate($task->getCreated()); ?> <br/>
-    Zuletzt bearbeitet am: <?php echo formatDate($task->getUpdated()); ?> <br/>
-</p>
+    ID: <?php echo $task ["id"]; ?> <br/>
+    User ID: <?php echo $task["user_id"]; ?> <br/>
+    Status ID: <?php echo $task["status_id"]; ?> <br/>
+    Beschreibung: <?php echo $task["description"]; ?> <br/>
+    </p>
 <p>
     <a href="taskliste.php">&lt;-- zurück zur taskliste</a>
 </p>

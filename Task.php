@@ -33,7 +33,6 @@ class Task {
         $this->updated = $updated;
     }
 
-
     /**
      * @return mixed
      */
